@@ -7,7 +7,7 @@ All of these commands require you to run `npm install` first. To see a full list
 
 ### Committing
 
-Please follow the commit message format in [CONTRIBUTING.md](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
+Please follow the commit message format in [CONTRIBUTING.md](https://github.com/ionic-team/ionic-v3/blob/master/.github/CONTRIBUTING.md#commit-message-format).
 
 
 ### Installing Nightly Version
@@ -125,7 +125,7 @@ Running `webdriver-manager help` should show you what directory the webdriver is
 
 **Requires Ruby. Skip this step entirely if you are unable to install Ruby.**
 
-1. See the [Sass Guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
+1. See the [Sass Guidelines](https://github.com/ionic-team/ionic-v3/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
 2. Install the linter: `gem install scss_lint`
 3. Run `gulp lint.sass` and fix any linter errors.
 
