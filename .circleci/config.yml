@@ -1,13 +1,10 @@
 version: 2
+
 jobs:
   build:
     working_directory: ~/ionic/
     docker:
-      - image: node:7
-    branches:
-      ignore:
-        - mono-refactor
-        - core
+      - image: node:8
     steps:
       - checkout
       - restore_cache:
@@ -18,16 +15,16 @@ jobs:
       - save_cache:
          key: ionic-site
          paths:
-         - ~/ionic-site/
+           - ~/ionic-site/
       - restore_cache:
-         key: node_modules_{{ checksum "package.json" }}
+         key: dependency-cache-{{ checksum "package.json" }}
       - run:
          name: Install node modules
          command: npm i
       - save_cache:
-         key: node_modules_{{ checksum "package.json" }}
+         key: dependency-cache-{{ checksum "package.json" }}
          paths:
-         - ~/ionic/node_modules/
+           - ~/ionic/node_modules/
       - run:
           name: Run tslint
           command: ./node_modules/.bin/gulp lint.ts
@@ -38,11 +35,11 @@ jobs:
               ./node_modules/.bin/gulp demos.prod --production=true --batch=$CIRCLE_NODE_INDEX --batches=$CIRCLE_NODE_TOTAL
             fi
       - add_ssh_keys
-      - deploy:
-          name: Update docs
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/ci/deploy.sh
-            else
-              echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
-            fi
+      # - deploy:
+      #     name: Update docs
+      #     command: |
+      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
+      #         ./scripts/ci/deploy.sh
+      #       else
+      #         echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
+      #       fi
