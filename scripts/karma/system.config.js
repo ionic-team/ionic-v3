@@ -33,8 +33,13 @@ System.config({
       main: 'index'
     },
     rxjs: {
+      main: 'index.js',
       defaultExtension: 'js'
     },
+    "rxjs/operators": {
+      main: 'index.js',
+      defaultExtension: 'js'
+    }
   }
 });
 
