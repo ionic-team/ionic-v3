@@ -473,6 +473,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
         });
       }
     }
+    this._cd.detectChanges();
   }
 
   /** @hidden */
