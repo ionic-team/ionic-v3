@@ -556,7 +556,8 @@ export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
       { component: MockView2, name: 'viewtwo' },
       { component: MockView3, name: 'viewthree' },
       { component: MockView4, name: 'viewfour' },
-      { component: MockView5, name: 'viewfive' }
+      { component: MockView5, name: 'viewfive' },
+      { component: MockView6, name: 'viewsix' }
     ]
   };
 }
@@ -572,6 +573,7 @@ export class MockView2 {}
 export class MockView3 {}
 export class MockView4 {}
 export class MockView5 {}
+export class MockView6 {}
 
 export function noop(): any { return 'noop'; }
 
