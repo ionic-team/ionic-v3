@@ -427,9 +427,33 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
     const matchedExactLink = navLinks.find(navLink => {
       return navLink.segmentParts.join('/') === segmentPieces.join('/');
     });
+    const matchedMostLink = navLinks.map(navLink => {
+      if (navLink.segmentParts.length === segmentPieces.length) {
+        const matchedRateLinkObj =  {navLink, matchedExactlyPieces: 0};
+
+        for (let idx = 0; idx < navLink.segmentParts.length; idx++) {
+          const segmentPart = navLink.segmentParts[idx];
+          if (!segmentPart.startsWith(':')) {
+            if (segmentPart === segmentPieces[idx]) {
+              matchedRateLinkObj.matchedExactlyPieces++;
+            } else {
+              return null;
+            }
+          }
+        }
+
+        return matchedRateLinkObj;
+      }
+
+      return null;
+    }).filter(matchedLink => matchedLink).sort((l1, l2) => l2.matchedExactlyPieces - l1.matchedExactlyPieces)
+      .map(matchedRateLinkObj => matchedRateLinkObj.navLink)[0];
 
     if (matchedExactLink) {
       const segment = getSegmentsFromUrlPieces(segmentPieces, matchedExactLink);
+      segments.push(segment);
+    } else if (matchedMostLink) {
+      const segment = getSegmentsFromUrlPieces(segmentPieces, matchedMostLink);
       segments.push(segment);
     } else {
       for (let i = segmentPieces.length; i >= 0; i--) {
