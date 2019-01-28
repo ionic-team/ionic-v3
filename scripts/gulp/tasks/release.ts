@@ -48,7 +48,7 @@ task('release.test', (done: (err: any) => void) => {
 
 // Release.update: update package.json and changelog
 task('release.update', (done: (err: any) => void) => {
-  if (promptAnswers.confirmRelease === 'yes') {
+  if (promptAnswers && promptAnswers.confirmRelease === 'yes') {
     runSequence('release.copyProdVersion',
                 'release.prepareChangelog',
                 done);
@@ -60,7 +60,7 @@ task('release.update', (done: (err: any) => void) => {
 
 // Release.publish: publish to GitHub and npm
 task('release.publish', (done: (err: any) => void) => {
-  if (promptAnswers.confirmRelease === 'yes') {
+  if (promptAnswers && promptAnswers.confirmRelease === 'yes') {
     runSequence('release.publishNpmRelease',
                 'release.publishGithubRelease',
                 done);
@@ -270,11 +270,12 @@ task('release.pullLatest', (done: Function) => {
     } else if ( stdOut && stdOut.length > 0) {
       done(new Error('There are uncommited changes. Please commit or stash changes.'));
     } else {
-      const gitPullResult = spawnSync('git', ['pull', 'origin', 'v3']);
+      const gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
       if (gitPullResult.status !== 0) {
         done(new Error('Error running git pull'));
+      } else {
+        done();
       }
-      done();
     }
   });
 });
