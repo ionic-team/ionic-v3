@@ -273,8 +273,9 @@ task('release.pullLatest', (done: Function) => {
       const gitPullResult = spawnSync('git', ['pull', 'origin', 'v3']);
       if (gitPullResult.status !== 0) {
         done(new Error('Error running git pull'));
+      } else {
+        done();
       }
-      done();
     }
   });
 });
