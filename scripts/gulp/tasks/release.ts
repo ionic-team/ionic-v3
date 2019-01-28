@@ -60,7 +60,7 @@ task('release.update', (done: (err: any) => void) => {
 
 // Release.publish: publish to GitHub and npm
 task('release.publish', (done: (err: any) => void) => {
-  if (promptAnswers.confirmRelease === 'yes') {
+  if (promptAnswers && promptAnswers.confirmRelease === 'yes') {
     runSequence('release.publishNpmRelease',
                 'release.publishGithubRelease',
                 done);
