@@ -48,7 +48,7 @@ task('release.test', (done: (err: any) => void) => {
 
 // Release.update: update package.json and changelog
 task('release.update', (done: (err: any) => void) => {
-  if (promptAnswers.confirmRelease === 'yes') {
+  if (promptAnswers && promptAnswers.confirmRelease === 'yes') {
     runSequence('release.copyProdVersion',
                 'release.prepareChangelog',
                 done);
