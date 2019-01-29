@@ -32,13 +32,10 @@ var IonicSnapshot = function(options) {
 
     self.flow = protractor.promise.controlFlow();
 
-    if(self.width > 0 && self.height > 0) {
-      self.flow.execute(function(){
-        return browser.driver.manage().window().setSize(self.width, self.height);
-      });
-    }
-    self.flow.execute(function(){
-      return browser.getCapabilities().then(function (capabilities) {
+    self.flow.execute(async () => {
+      try {
+        const capabilities = await browser.getCapabilities();
+        
         self.testData = {
           group_id: self.groupId,
           app_id: self.appId,
@@ -53,7 +50,18 @@ var IonicSnapshot = function(options) {
           version: capabilities.get('version'),
           access_key: options.accessKey
         };
-      });
+        
+        if (self.width > 0 && self.height > 0) {
+          const windowPadding = await browser.executeScript('return { w: window.outerWidth - window.innerWidth, h: window.outerHeight - window.innerHeight };');
+          
+          self.width += windowPadding.w;
+          self.height += windowPadding.h;
+          
+          browser.driver.manage().window().setSize(self.width, self.height);
+        }
+      } catch(err) {
+        throw err;
+      }
     });
 
     process.on('exit', function(code) {
