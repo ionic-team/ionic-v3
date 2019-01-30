@@ -8,7 +8,7 @@ exports.config = {
   domain: 'ionic-snapshot-go.appspot.com',
   //domain: 'localhost:8080',
 
-  sleepBetweenSpecs: 300,
+  sleepBetweenSpecs: 0,
 
   platformDefaults: {
     browser: 'chrome',

@@ -16,7 +16,7 @@ var IonicSnapshot = function(options) {
     self.groupId = options.groupId || 'test_group';
     self.appId = options.appId || 'test_app';
     self.build = (browser.params.dev === 'true') ? 'Development' : 'Production';
-    self.sleepBetweenSpecs = self.build === 'Development' ? 3000 : (options.sleepBetweenSpecs || 500);
+    self.sleepBetweenSpecs = self.build === 'Development' ? 3000 : (options.sleepBetweenSpecs || 0);
     self.testId = browser.params.test_id || 'test_id';
     self.shouldUpload = browser.params.upload !== 'false';
     self.platformId = browser.params.platform_id;
@@ -108,85 +108,75 @@ var IonicSnapshot = function(options) {
       }
     }
 
-    self.flow.execute(function(){
+    self.flow.execute(async function(){
       var d = protractor.promise.defer();
 
-      browser.getCurrentUrl().then(function(currentUrl) {
+      if (!self.shouldUpload) {
+        return d.fulfill();
+      }
+      
+      const currentUrl = await browser.getCurrentUrl();
+      const pngBase64 = await browser.takeScreenshot();
+      
+      await browser.sleep(self.sleepBetweenSpecs);
+      
+      const specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
-        browser.sleep(self.sleepBetweenSpecs).then(function(){
+      self.testData.spec_index = spec.id;
+      self.testData.highest_mismatch = self.highestMismatch;
+      self.testData.png_base64 = pngBase64;
+      self.testData.description = spec.getFullName().replace('components/', '').replace('test/', '').replace('www', '');
+      self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '').replace('www/', '');
 
-          if (!self.shouldUpload) {
-            return d.fulfill();
-          }
+      var requestDeferred = q.defer();
+      self.screenshotRequestPromises.push(requestDeferred.promise);
+      request.post(
+        'http://' + self.domain + '/screenshot',
+        { form: self.testData },
+        function (error, response, body) {
+          try {
+            if (error) {
+              log(specIdString, colors.red('error posting screenshot:'), error);
 
-          browser.takeScreenshot().then(function(pngBase64) {
-            var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
+            } else if (response.statusCode >= 400) {
+              log(specIdString, colors.red('error posting screenshot:'), response.statusCode, body);
 
-            self.testData.spec_index = spec.id;
-            // console.log('spec.id: ', spec.id);
-            self.testData.highest_mismatch = self.highestMismatch;
-            self.testData.png_base64 = pngBase64;
-            self.testData.description = spec.getFullName().replace('components/', '').replace('test/', '').replace('www', '');
-            self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '').replace('www/', '');
-            //console.log('self.testData.description: ', self.testData.description);
-            //console.log('self.testData.url: ', self.testData.url);
-            pngBase64 = null;
+            } else {
+              var rspData = JSON.parse(body);
+              self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
 
-            var requestDeferred = q.defer();
-            self.screenshotRequestPromises.push(requestDeferred.promise);
+              var mismatch = Math.round(rspData.Mismatch * 100) / 100;
 
-            request.post(
-              'http://' + self.domain + '/screenshot',
-              { form: self.testData },
-              function (error, response, body) {
-                try {
-                  if (error) {
-                    log(specIdString, colors.red('error posting screenshot:'), error);
-
-                  } else if (response.statusCode >= 400) {
-                    log(specIdString, colors.red('error posting screenshot:'), response.statusCode, body);
-
-                  } else {
-                    var rspData = JSON.parse(body);
-                    self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
-
-                    var mismatch = Math.round(rspData.Mismatch * 100) / 100;
-
-                    if (rspData.Mismatch > 1) {
-                      log(specIdString, colors.red('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
-                    } else if (rspData.Mismatch > 0) {
-                      log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
-                    } else {
-                      log(specIdString, colors.green('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
-                    }
-
-                    var resultKey = (((rspData.Mismatch * 1000) + 1000000) + '').split('.')[0] + '-' + spec.id;
-                    self.results[resultKey] = {
-                      index: spec.id,
-                      name: spec.getFullName(),
-                      mismatch: mismatch,
-                      compareUrl: rspData.CompareUrl,
-                      screenshotUrl: rspData.ScreenshotUrl,
-                    };
-
-                    if (rspData.IsMismatch) {
-                      self.mismatches.push(resultKey);
-                    }
-                  }
-
-                } catch(e) {
-                  log(specIdString, colors.red('error parsing screenshot response:'), e);
-                  process.exit(1);
-                }
-                requestDeferred.resolve();
+              if (rspData.Mismatch > 1) {
+                log(specIdString, colors.red('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
+              } else if (rspData.Mismatch > 0) {
+                log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
+              } else {
+                log(specIdString, colors.green('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
               }
-            );
-            d.fulfill();
-          });
 
-        });
+              var resultKey = (((rspData.Mismatch * 1000) + 1000000) + '').split('.')[0] + '-' + spec.id;
+              self.results[resultKey] = {
+                index: spec.id,
+                name: spec.getFullName(),
+                mismatch: mismatch,
+                compareUrl: rspData.CompareUrl,
+                screenshotUrl: rspData.ScreenshotUrl,
+              };
 
-      });
+              if (rspData.IsMismatch) {
+                self.mismatches.push(resultKey);
+              }
+            }
+
+          } catch(e) {
+            log(specIdString, colors.red('error parsing screenshot response:'), e);
+            process.exit(1);
+          }
+          requestDeferred.resolve();
+        }
+      );
+      d.fulfill();
 
       return d.promise;
     });
