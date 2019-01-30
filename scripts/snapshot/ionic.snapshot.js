@@ -16,7 +16,7 @@ var IonicSnapshot = function(options) {
     self.groupId = options.groupId || 'test_group';
     self.appId = options.appId || 'test_app';
     self.build = (browser.params.dev === 'true') ? 'Development' : 'Production';
-    self.sleepBetweenSpecs = self.build === 'Development' ? 3000 : (options.sleepBetweenSpecs || 500);
+    self.sleepBetweenSpecs = self.build === 'Development' ? 3000 : (options.sleepBetweenSpecs || 0);
     self.testId = browser.params.test_id || 'test_id';
     self.shouldUpload = browser.params.upload !== 'false';
     self.platformId = browser.params.platform_id;
@@ -117,6 +117,9 @@ var IonicSnapshot = function(options) {
       
       const currentUrl = await browser.getCurrentUrl();
       const pngBase64 = await browser.takeScreenshot();
+      
+      await browser.sleep(self.sleepBetweenSpecs);
+      
       const specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
       self.testData.spec_index = spec.id;
