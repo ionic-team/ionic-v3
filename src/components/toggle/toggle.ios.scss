@@ -83,6 +83,7 @@ $toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
 
 .toggle-ios {
   position: relative;
+  display: block;
 
   width: $toggle-ios-width;
   height: $toggle-ios-height;
