@@ -1,3 +1,27 @@
+<a name="3.9.3"></a>
+## 3.9.3 (2019-02-01)
+`ionic-angular` 3.9.3 is patch release of `ionic-angular` 3.9.2. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.3.
+
+```
+npm install ionic-angular@3.9.3 --save
+```
+
+### Bug Fixes
+
+* **accessibility:** disable icon label if tab has title ([98c5d7e](https://github.com/ionic-team/ionic-v3/commit/98c5d7e6be7f69aaf5654b26ca08c608bbaae411))
+* **alert:** allow disabled text input ([1b3190b](https://github.com/ionic-team/ionic-v3/commit/1b3190b2bbcc4d8443ba2931cdcd66a7b2d562eb)), closes [#13488](https://github.com/ionic-team/ionic/issues/13488)
+* **content:** remove layout contain to fix fab behind toolbar ([79c8d67](https://github.com/ionic-team/ionic-v3/commit/79c8d67e527a6fc24296cc883fbd6cfdd9b68269))
+* **cordova:** don't apply safe area to footer if there are bottom tabs ([0182014](https://github.com/ionic-team/ionic-v3/commit/0182014fe5166fed044e80fe98889648c9a65456))
+* **sass:** use sass variables for slide background values ([3d0713d](https://github.com/ionic-team/ionic-v3/commit/3d0713d8ec3c2e73007ea96d8f1617a281b51683))
+* **toggle:** add display: block to ensure proper track dimension calculation ([68d0a922](https://github.com/ionic-team/ionic-v3/commit/68d0a922cced822dca350c60e3dad1040a618e3f)), closes [#919](https://github.com/ionic-team/ionic-v3/issues/919)
+
+
+### Notes
+
+This release of `ionic-angular` brings full Node 10 support. 
+
+
+
 <a name="3.9.2"></a>
 ## [3.9.2](https://github.com/ionic-team/ionic/compare/v3.9.1...v3.9.2) (2017-11-08)
 
