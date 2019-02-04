@@ -1,5 +1,5 @@
 <a name="3.9.3"></a>
-## [3.9.3](https://github.com/ionic-team/ionic/compare/v3.9.2...v3.9.3) (2019-02-01)
+## 3.9.3 (2019-02-01)
 `ionic-angular` 3.9.3 is patch release of `ionic-angular` 3.9.2. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.3.
 
 ```
