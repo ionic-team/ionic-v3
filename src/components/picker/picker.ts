@@ -78,7 +78,7 @@ export class Picker extends ViewController {
   setCssClass(cssClass: string) {
     this.data.cssClass = cssClass;
   }
-  
+
   /**
    * Present the picker instance.
    *

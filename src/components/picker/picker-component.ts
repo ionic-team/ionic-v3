@@ -57,7 +57,7 @@ export class PickerCmp {
     renderer: Renderer
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
-    this.d = params.data; 
+    this.d = params.data;
     this.mode = this.d.mode || config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
 

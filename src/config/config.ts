@@ -300,7 +300,7 @@ export class Config {
   getNumber(key: string, fallbackValue: number = NaN): number {
     return this.parseNumber(this.get(key), fallbackValue);
   }
-  
+
   parseNumber(value: string, fallbackValue: number = NaN): number {
     const val = parseFloat(value);
     return isNaN(val) ? fallbackValue : val;
