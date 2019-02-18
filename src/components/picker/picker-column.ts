@@ -86,11 +86,8 @@ export class PickerColumnCmp {
       zone: false
     });
 
-    const rotateFallback = 0;
-    const scaleFallback = 1;
-
-    this.rotateFactor = this.config.getNumber('pickerRotateFactor', rotateFallback);
-    this.scaleFactor = this.config.getNumber('pickerScaleFactor', scaleFallback);
+    this.rotateFactor = this.config.getNumber('pickerRotateFactor', 0);
+    this.scaleFactor = this.config.getNumber('pickerScaleFactor', 1);
 
     if (this.col.mode) {
       const configMode = this.config.getModeConfig(this.col.mode);
@@ -99,11 +96,11 @@ export class PickerColumnCmp {
       const getScaleFactor = configMode.pickerScaleFactor;
 
       if (getRotateFactor !== undefined) {
-        this.rotateFactor = this.config.parseNumber(getRotateFactor, rotateFallback);
+        this.rotateFactor = this.config.parseNumber(getRotateFactor, this.rotateFactor);
       }
 
       if (getScaleFactor !== undefined) {
-        this.scaleFactor = this.config.parseNumber(getScaleFactor, scaleFallback);
+        this.scaleFactor = this.config.parseNumber(getScaleFactor, this.scaleFactor);
       }
     }
   }
