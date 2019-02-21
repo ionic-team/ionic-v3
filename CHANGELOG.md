@@ -1,6 +1,19 @@
+<a name="3.9.4"></a>
+## 3.9.4 (2019-02-21)
+`ionic-angular` 3.9.4 is patch release of `ionic-angular` 3.9.3. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.4.
+
+```
+npm install ionic-angular@3.9.4 --save
+```
+
+### Bug Fixes
+
+* **picker:** allow overriding mode ([#974](https://github.com/ionic-team/ionic-v3/issues/974)) ([aec4810](https://github.com/ionic-team/ionic-v3/commit/aec4810))
+
+
 <a name="3.9.3"></a>
 ## 3.9.3 (2019-02-01)
-`ionic-angular` 3.9.3 is patch release of `ionic-angular` 3.9.2. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.3.
+`ionic-angular` 3.9.3 is patch release of `ionic-angular` 3.9.2. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.3.
 
 ```
 npm install ionic-angular@3.9.3 --save
