@@ -54,7 +54,7 @@ export class PickerColumnCmp {
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    config: Config,
+    private config: Config,
     private _plt: Platform,
     private elementRef: ElementRef,
     private _zone: NgZone,
@@ -63,8 +63,6 @@ export class PickerColumnCmp {
     domCtrl: DomController,
   ) {
     this.events = new UIEventManager(plt);
-    this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
-    this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
     this.decelerateFunc = this.decelerate.bind(this);
     this.debouncer = domCtrl.debouncer();
   }
@@ -87,6 +85,24 @@ export class PickerColumnCmp {
       capture: true,
       zone: false
     });
+
+    this.rotateFactor = this.config.getNumber('pickerRotateFactor', 0);
+    this.scaleFactor = this.config.getNumber('pickerScaleFactor', 1);
+
+    if (this.col.mode) {
+      const configMode = this.config.getModeConfig(this.col.mode);
+
+      const getRotateFactor = configMode.pickerRotateFactor;
+      const getScaleFactor = configMode.pickerScaleFactor;
+
+      if (getRotateFactor !== undefined) {
+        this.rotateFactor = this.config.parseNumber(getRotateFactor, this.rotateFactor);
+      }
+
+      if (getScaleFactor !== undefined) {
+        this.scaleFactor = this.config.parseNumber(getScaleFactor, this.scaleFactor);
+      }
+    }
   }
 
   ngOnDestroy() {

@@ -58,7 +58,7 @@ export class PickerCmp {
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = config.get('mode');
+    this.mode = this.d.mode || config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
 
     if (this.d.cssClass) {
@@ -90,12 +90,13 @@ export class PickerCmp {
       if (!isPresent(column.options)) {
         column.options = [];
       }
+      column.mode = this.mode;
       column.selectedIndex = column.selectedIndex || 0;
       column.options = column.options.map(inputOpt => {
         let opt: PickerColumnOption = {
           text: '',
           value: '',
-          disabled: inputOpt.disabled,
+          disabled: inputOpt.disabled
         };
 
         if (isPresent(inputOpt)) {

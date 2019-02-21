@@ -31,7 +31,6 @@ export class Picker extends ViewController {
     this.isOverlay = true;
 
     this.ionChange = new EventEmitter<any>();
-
     config.setTransition('picker-slide-in', PickerSlideIn);
     config.setTransition('picker-slide-out', PickerSlideOut);
   }
