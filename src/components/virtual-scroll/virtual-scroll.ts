@@ -716,6 +716,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * @hidden
    */
   scrollUpdate(ev: ScrollEvent) {
+    // ensure no empty are processed
+    if (!ev) {
+      return;
+    }
+
     // set the scroll top from the scroll event
     this._data.scrollTop = ev.scrollTop;
 
