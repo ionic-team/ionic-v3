@@ -160,11 +160,15 @@ export class IonicApp extends Ion implements OnInit {
        * re-enabled when removing the
        * disable-scroll class.
        */
-      this.setElementStyle('z-index', '1');
+      const plaform = this._plt;
 
-      setTimeout(() => {
-        this.setElementStyle('z-index', null);
-      }, 32);
+      plaform.raf(() => {
+        this.setElementStyle('z-index', '1');
+
+        plaform.raf(() => {
+          this.setElementStyle('z-index', null);
+        });
+      });
     }
   }
 
