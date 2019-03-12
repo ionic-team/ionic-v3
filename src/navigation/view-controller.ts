@@ -47,6 +47,7 @@ export class ViewController {
   _state: number = STATE_NEW;
   _cssClass: string;
   _ts: number;
+  _bindHandler: any;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -113,7 +114,8 @@ export class ViewController {
 
     this._cssClass = rootCssClass;
     this._ts = Date.now();
-    window.addEventListener('orientationchange', this.handleOrientationChange.bind(this));
+    this._bindHandler = this.handleOrientationChange.bind(this);
+    window.addEventListener('orientationchange', this._bindHandler);
   }
 
   handleOrientationChange() {
@@ -542,7 +544,7 @@ export class ViewController {
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
-      window.removeEventListener('orientationchange', this.handleOrientationChange.bind(this));
+      window.removeEventListener('orientationchange', this._bindHandler);
       // completely destroy this component. boom.
       this._cmp.destroy();
     }
