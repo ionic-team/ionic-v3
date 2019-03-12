@@ -156,7 +156,7 @@ export class IonicApp extends Ion implements OnInit {
 
       /**
        * On iOS 12.2 there is a bug that
-       * prevent pointer-events from being
+       * prevents pointer-events from being
        * re-enabled when removing the
        * disable-scroll class.
        */
