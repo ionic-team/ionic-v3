@@ -151,7 +151,24 @@ export class IonicApp extends Ion implements OnInit {
       }
       clearTimeout(this._tmr);
       console.debug('App Root: removing .disable-scroll');
+
       this.setElementClass('disable-scroll', false);
+
+      /**
+       * On iOS 12.2 there is a bug that
+       * prevents pointer-events from being
+       * re-enabled when removing the
+       * disable-scroll class.
+       */
+      const plaform = this._plt;
+
+      plaform.raf(() => {
+        this.setElementStyle('z-index', '1');
+
+        plaform.raf(() => {
+          this.setElementStyle('z-index', null);
+        });
+      });
     }
   }
 
