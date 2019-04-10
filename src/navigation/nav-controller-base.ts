@@ -772,8 +772,8 @@ export class NavControllerBase extends Ion implements NavController {
        */
       const platform = this.plt;
       if (
-        enteringView && 
-        enteringView.getIONContentRef && 
+        enteringView &&
+        enteringView.getIONContentRef &&
         enteringView.getIONContentRef() &&
         platform.is('ios')
       ) {
