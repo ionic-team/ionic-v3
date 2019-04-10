@@ -770,8 +770,13 @@ export class NavControllerBase extends Ion implements NavController {
        * be re-enabled unless there
        * is some kind of CSS reflow triggered
        */
-      if (enteringView.getIONContentRef()) {
-        const platform = this.plt;
+      const platform = this.plt;
+      if (
+        enteringView &&
+        enteringView.getIONContentRef &&
+        enteringView.getIONContentRef() &&
+        platform.is('ios')
+      ) {
         platform.timeout(() => {
           platform.raf(() => {
             const content = enteringView.getIONContentRef().nativeElement;
