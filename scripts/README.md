@@ -140,7 +140,7 @@ Running `webdriver-manager help` should show you what directory the webdriver is
 ### Releasing Ionic Source
 
 1. Run [snapshot](#running-snapshot) & verify all changes are intentional, update master snapshot if so
-2. Run `gulp release`
+2. Run `gulp release` (don't forget the `GH_TOKEN` env variable if you use personal access tokens on GitHub)
   - Pulls latest from GitHub
   - Runs `gulp validate`
   - Builds npm package files into dist

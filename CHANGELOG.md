@@ -1,3 +1,19 @@
+<a name="3.9.5"></a>
+## [3.9.5](https://github.com/ionic-team/ionic-v3/compare/v3.9.4...v3.9.5) (2019-04-16)
+`ionic-angular` 3.9.5 is patch release of `ionic-angular` 3.9.4. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.5.
+
+```
+npm install ionic-angular@3.9.5 --save
+```
+
+### Bug Fixes
+
+* **ios:** resolve iOS 12.2 scrolling issues with navigation and overlays ([#1007](https://github.com/ionic-team/ionic-v3/issues/1007)) ([cf65fad](https://github.com/ionic-team/ionic-v3/commit/cf65fad)), fixes [#984](https://github.com/ionic-team/ionic-v3/issues/984), [#1004](https://github.com/ionic-team/ionic-v3/issues/1004), and [#1005](https://github.com/ionic-team/ionic-v3/issues/1005)
+* **navigation:** fix nodes leak when opening and closing modals ([#973](https://github.com/ionic-team/ionic-v3/pull/973)) ([b0426a3](https://github.com/ionic-team/ionic-v3/commit/b0426a3)), fixes [#231](https://github.com/ionic-team/ionic-v3/issues/231)
+* **virtual-scroll:** validate null events on scroll update ([#970](https://github.com/ionic-team/ionic-v3/issues/970)) ([87d75d7](https://github.com/ionic-team/ionic-v3/commit/87d75d7)), fixes [#967](https://github.com/ionic-team/ionic-v3/issues/967)
+
+
+
 <a name="3.9.4"></a>
 ## 3.9.4 (2019-02-21)
 `ionic-angular` 3.9.4 is patch release of `ionic-angular` 3.9.3. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.4.
