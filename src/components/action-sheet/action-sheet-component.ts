@@ -23,6 +23,7 @@ import { ViewController } from '../../navigation/view-controller';
           '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
           '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-start]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>' +
+            '<img [src]="b.img" *ngIf="b.img" class="action-sheet-img">' +
             '{{b.text}}' +
           '</button>' +
         '</div>' +

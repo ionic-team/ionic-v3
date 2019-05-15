@@ -90,6 +90,18 @@ $action-sheet-wp-icon-text-align:                 center !default;
 /// @prop - Vertical align of the icon in the action sheet button
 $action-sheet-wp-icon-vertical-align:             middle !default;
 
+/// @prop - Font size of the image in the action sheet button
+$action-sheet-wp-img-font-size:                  2.4rem !default;
+
+/// @prop - Width of the image in the action sheet button
+$action-sheet-wp-img-width:                      2.3rem !default;
+
+/// @prop - Text align of the image in the action sheet button
+$action-sheet-wp-img-text-align:                 center !default;
+
+/// @prop - Vertical align of the image in the action sheet button
+$action-sheet-wp-img-vertical-align:             middle !default;
+
 // deprecated
 $action-sheet-wp-icon-margin:                     null !default;
 
@@ -104,6 +116,21 @@ $action-sheet-wp-icon-margin-bottom:              0 !default;
 
 /// @prop - Margin start of the icon in the action sheet button
 $action-sheet-wp-icon-margin-start:               0 !default;
+
+// deprecated
+$action-sheet-wp-img-margin:                     null !default;
+
+/// @prop - Margin top of the image in the action sheet button
+$action-sheet-wp-img-margin-top:                 0 !default;
+
+/// @prop - Margin end of the image in the action sheet button
+$action-sheet-wp-img-margin-end:                 20px !default;
+
+/// @prop - Margin bottom of the image in the action sheet button
+$action-sheet-wp-img-margin-bottom:              0 !default;
+
+/// @prop - Margin start of the image in the action sheet button
+$action-sheet-wp-img-margin-start:               0 !default;
 
 
 .action-sheet-wp .action-sheet-title {
@@ -146,6 +173,20 @@ $action-sheet-wp-icon-margin-start:               0 !default;
 
   @include deprecated-variable(margin, $action-sheet-wp-icon-margin) {
     @include margin($action-sheet-wp-icon-margin-top, $action-sheet-wp-icon-margin-end, $action-sheet-wp-icon-margin-bottom, $action-sheet-wp-icon-margin-start);
+  }
+}
+
+.action-sheet-wp .action-sheet-img {
+  @include padding(0);
+  @include text-align($action-sheet-wp-img-text-align);
+
+  width: $action-sheet-wp-img-width;
+
+  font-size: $action-sheet-wp-img-font-size;
+  vertical-align: $action-sheet-wp-img-vertical-align;
+
+  @include deprecated-variable(margin, $action-sheet-wp-img-margin) {
+    @include margin($action-sheet-wp-img-margin-top, $action-sheet-wp-img-margin-end, $action-sheet-wp-img-margin-bottom, $action-sheet-wp-img-margin-start);
   }
 }
 
