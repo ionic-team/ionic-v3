@@ -23,7 +23,7 @@ ion-reorder {
   transition: transform 140ms ease-in;
 
   pointer-events: all;
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 .reorder-side-start ion-reorder {
