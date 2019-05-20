@@ -1,3 +1,17 @@
+<a name="3.9.6"></a>
+## [3.9.6](https://github.com/ionic-team/ionic-v3/compare/v3.9.5...v3.9.6) (2019-05-20)
+`ionic-angular` 3.9.6 is patch release of `ionic-angular` 3.9.5. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.6.
+
+```
+npm install ionic-angular@3.9.6 --save
+```
+
+### Bug Fixes
+
+* **reorder:** remove touch action to fix functionality on edge ([#1030](https://github.com/ionic-team/ionic-v3/issues/1030)) ([deb2627](https://github.com/ionic-team/ionic-v3/commit/deb2627)), closes [#1023](https://github.com/ionic-team/ionic-v3/issues/1023)
+
+
+
 <a name="3.9.5"></a>
 ## [3.9.5](https://github.com/ionic-team/ionic-v3/compare/v3.9.4...v3.9.5) (2019-04-16)
 `ionic-angular` 3.9.5 is patch release of `ionic-angular` 3.9.4. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.5.
