@@ -1,3 +1,18 @@
+<a name="3.9.9"></a>
+## [3.9.9](https://github.com/ionic-team/ionic/compare/v3.9.8...v3.9.9) (2019-10-07)
+
+`ionic-angular` 3.9.9 is patch release of `ionic-angular` 3.9.8. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.9.
+
+```
+npm install ionic-angular@3.9.9 --save
+```
+
+### Bug Fixes
+
+* **toggle:** support accessibility double tap ([#1067](https://github.com/ionic-team/ionic/issues/1067)) ([cb5ddad](https://github.com/ionic-team/ionic/commit/cb5ddad)), closes [#1061](https://github.com/ionic-team/ionic/issues/1061)
+
+
+
 <a name="3.9.8"></a>
 ## [3.9.8](https://github.com/ionic-team/ionic/compare/v3.9.7...v3.9.8) (2019-07-11)
 
