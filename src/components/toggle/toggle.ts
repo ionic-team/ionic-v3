@@ -145,7 +145,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
    * @hidden
    */
   _onDragMove(currentX: number) {
-    if (!this._startX) {
+    if (this._startX === undefined) {
       assert(false, '_startX must be valid');
       return;
     }
@@ -164,7 +164,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
    * @hidden
    */
   _onDragEnd(endX: number) {
-    if (!this._startX) {
+    if (this._startX === undefined) {
       assert(false, '_startX must be valid');
       return;
     }
