@@ -15,7 +15,7 @@ export function isIos(plt: Platform): boolean {
   // checks navigator.platform to see if it's an actual iOS device
   // this does not use the user-agent string because it is often spoofed
   // an actual iPad will return true, a chrome dev tools iPad will return false
-  return plt.testNavigatorPlatform('iphone|ipad|ipod');
+  return plt.testNavigatorPlatform('iphone|ipad|ipod|macintosh');
 }
 
 export function isSafari(plt: Platform): boolean {
