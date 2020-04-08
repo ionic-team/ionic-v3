@@ -41,7 +41,7 @@ import { Platform } from '../../platform/platform';
         '[attr.autocomplete]="_autocomplete" ' +
         '[attr.autocorrect]="_autocorrect" ' +
         '[attr.spellcheck]="_spellcheck">' +
-      '<button ion-button clear class="searchbar-clear-icon" [mode]="_mode" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
+      '<button ion-button clear class="searchbar-clear-icon" [mode]="_mode" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button" aria-label="clear"></button>' +
     '</div>' +
     '<button ion-button #cancelButton mode="ios" [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
   host: {
