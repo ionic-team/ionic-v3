@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
-import { DOCUMENT, Title } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 import { IonicApp } from './app-root';
 import * as Constants from './app-constants';
