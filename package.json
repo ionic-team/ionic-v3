@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic.git"
+    "url": "https://github.com/ionic-team/ionic-v3.git"
   },
   "scripts": {
     "test": "gulp validate",
