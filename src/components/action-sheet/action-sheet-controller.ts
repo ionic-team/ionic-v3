@@ -46,6 +46,10 @@ import { Config } from '../../config/config';
  *      title: 'Modify your album',
  *      buttons: [
  *        {
+ *          text: 'Appicon',
+ *          img: 'assets/img/appicon.png' // use img tag on the bottom
+ *        },
+ *        {
  *          text: 'Destructive',
  *          role: 'destructive',
  *          handler: () => {
@@ -91,6 +95,7 @@ import { Config } from '../../config/config';
  * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
  * | text     | `string` | The buttons text.                                                                                                                                |
  * | icon     | `icon`   | The buttons icons.                                                                                                                               |
+ * | img      | `img`    | The buttons imgs.                                                                                                                               |
  * | handler  | `any`    | An express the button should evaluate.                                                                                                           |
  * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                       |
  * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If no role is provided, it will display the button without any additional styles. |

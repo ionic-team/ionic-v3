@@ -78,6 +78,18 @@ $action-sheet-md-icon-text-align:                       center !default;
 /// @prop - Vertical align of the icon in the action sheet button
 $action-sheet-md-icon-vertical-align:                   middle !default;
 
+/// @prop - Font size of the image in the action sheet button
+$action-sheet-md-img-font-size:                        2.4rem !default;
+
+/// @prop - Width of the image in the action sheet button
+$action-sheet-md-img-width:                            2.3rem !default;
+
+/// @prop - Text align of the image in the action sheet button
+$action-sheet-md-img-text-align:                       center !default;
+
+/// @prop - Vertical align of the image in the action sheet button
+$action-sheet-md-img-vertical-align:                   middle !default;
+
 // deprecated
 $action-sheet-md-icon-margin:                           null !default;
 
@@ -92,6 +104,21 @@ $action-sheet-md-icon-margin-bottom:                    0 !default;
 
 /// @prop - Margin start of the icon in the action sheet button
 $action-sheet-md-icon-margin-start:                     0 !default;
+
+// deprecated
+$action-sheet-md-img-margin:                           null !default;
+
+/// @prop - Margin top of the image in the action sheet button
+$action-sheet-md-img-margin-top:                       0 !default;
+
+/// @prop - Margin end of the image in the action sheet button
+$action-sheet-md-img-margin-end:                       32px !default;
+
+/// @prop - Margin bottom of the image in the action sheet button
+$action-sheet-md-img-margin-bottom:                    0 !default;
+
+/// @prop - Margin start of the image in the action sheet button
+$action-sheet-md-img-margin-start:                     0 !default;
 
 
 .action-sheet-md .action-sheet-title {
@@ -138,6 +165,20 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 
   @include deprecated-variable(margin, $action-sheet-md-icon-margin) {
     @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
+  }
+}
+
+.action-sheet-md .action-sheet-img {
+  @include padding(0);
+  @include text-align($action-sheet-md-img-text-align);
+
+  width: $action-sheet-md-img-width;
+
+  font-size: $action-sheet-md-img-font-size;
+  vertical-align: $action-sheet-md-img-vertical-align;
+
+  @include deprecated-variable(margin, $action-sheet-md-img-margin) {
+    @include margin($action-sheet-md-img-margin-top, $action-sheet-md-img-margin-end, $action-sheet-md-img-margin-bottom, $action-sheet-md-img-margin-start);
   }
 }
 

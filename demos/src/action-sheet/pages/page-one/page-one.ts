@@ -13,6 +13,10 @@ export class PageOne {
       title: 'Albums',
       buttons: [
         {
+          text: 'Appicon',
+          img: 'assets/img/appicon.png' // use img tag on the bottom
+        },
+        {
           text: 'Delete',
           role: 'destructive',
           icon: !this.platform.is('ios') ? 'trash' : null,
