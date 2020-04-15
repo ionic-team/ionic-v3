@@ -10,8 +10,21 @@ import {
   navGroupStringtoObjects,
   normalizeLinks,
   urlToNavGroupStrings,
-  } from '../url-serializer';
-import { MockView1, MockView2, MockView3, mockApp, mockDeepLinkConfig, mockNavController, mockTab, mockTabs, noop } from '../../util/mock-providers';
+} from '../url-serializer';
+import {
+  MockView1,
+  MockView2,
+  MockView3,
+  MockView4,
+  MockView5,
+  MockView6,
+  mockApp,
+  mockDeepLinkConfig,
+  mockNavController,
+  mockTab,
+  mockTabs,
+  noop
+} from '../../util/mock-providers';
 
 
 describe('UrlSerializer', () => {
@@ -729,6 +742,110 @@ describe('UrlSerializer', () => {
       expect(segmentPairs[0].segments[2].secondaryId).toEqual('tab-four');
     });
 
+    it('should return a certain component if it matches more surely than a wildcard link', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: ':userId/linking/:productId' };
+      const link2 = { component: MockView2, name: 'viewtwo', segment: 'linking/:productId' };
+      const link3 = { component: MockView3, name: 'viewthree', segment: ':userId/thinking' };
+      const link4 = { component: MockView4, name: 'viewfour', segment: ':userId/:categoryId/:productId' };
+      const link5 = { component: MockView5, name: 'viewfive', segment: ':userId/:categoryId' };
+      const link6 = { component: MockView6, name: 'viewsix', segment: ':userId' };
+
+      const links = normalizeLinks([link1, link2, link3, link4, link5, link6]);
+      const url1 = '5/linking/6';
+      const url2 = 'linking/7';
+      const url3 = '8/thinking';
+      const url4 = 'hey/smth/smthelse';
+      const url5 = 'hi/smth2';
+      const url6 = 'hei';
+
+      const segmentPairs1 = convertUrlToDehydratedSegments(url1, links);
+      expect(segmentPairs1.length).toEqual(1);
+      expect(segmentPairs1[0].segments.length).toEqual(1);
+      expect(segmentPairs1[0].segments[0].id).toEqual('5/linking/6');
+      expect(segmentPairs1[0].segments[0].name).toEqual('viewone');
+      expect(segmentPairs1[0].segments[0].data.userId).toEqual('5');
+      expect(segmentPairs1[0].segments[0].data.productId).toEqual('6');
+      expect(segmentPairs1[0].segments[0].component.name).toEqual(MockView1.name);
+
+      const segmentPairs2 = convertUrlToDehydratedSegments(url2, links);
+      expect(segmentPairs2.length).toEqual(1);
+      expect(segmentPairs2[0].segments.length).toEqual(1);
+      expect(segmentPairs2[0].segments[0].id).toEqual('linking/7');
+      expect(segmentPairs2[0].segments[0].data.productId).toEqual('7');
+      expect(segmentPairs2[0].segments[0].name).toEqual('viewtwo');
+      expect(segmentPairs2[0].segments[0].component.name).toEqual(MockView2.name);
+
+      const segmentPairs3 = convertUrlToDehydratedSegments(url3, links);
+      expect(segmentPairs3.length).toEqual(1);
+      expect(segmentPairs3[0].segments.length).toEqual(1);
+      expect(segmentPairs3[0].segments[0].id).toEqual('8/thinking');
+      expect(segmentPairs3[0].segments[0].data.userId).toEqual('8');
+      expect(segmentPairs3[0].segments[0].name).toEqual('viewthree');
+      expect(segmentPairs3[0].segments[0].component.name).toEqual(MockView3.name);
+
+      const segmentPairs4 = convertUrlToDehydratedSegments(url4, links);
+      expect(segmentPairs4.length).toEqual(1);
+      expect(segmentPairs4[0].segments.length).toEqual(1);
+      expect(segmentPairs4[0].segments[0].id).toEqual('hey/smth/smthelse');
+      expect(segmentPairs4[0].segments[0].name).toEqual('viewfour');
+      expect(segmentPairs4[0].segments[0].data.userId).toEqual('hey');
+      expect(segmentPairs4[0].segments[0].data.categoryId).toEqual('smth');
+      expect(segmentPairs4[0].segments[0].data.productId).toEqual('smthelse');
+      expect(segmentPairs4[0].segments[0].component.name).toEqual(MockView4.name);
+
+      const segmentPairs5 = convertUrlToDehydratedSegments(url5, links);
+      expect(segmentPairs5.length).toEqual(1);
+      expect(segmentPairs5[0].segments.length).toEqual(1);
+      expect(segmentPairs5[0].segments[0].id).toEqual('hi/smth2');
+      expect(segmentPairs5[0].segments[0].name).toEqual('viewfive');
+      expect(segmentPairs5[0].segments[0].data.userId).toEqual('hi');
+      expect(segmentPairs5[0].segments[0].data.categoryId).toEqual('smth2');
+      expect(segmentPairs5[0].segments[0].component.name).toEqual(MockView5.name);
+
+      const segmentPairs6 = convertUrlToDehydratedSegments(url6, links);
+      expect(segmentPairs6.length).toEqual(1);
+      expect(segmentPairs6[0].segments.length).toEqual(1);
+      expect(segmentPairs6[0].segments[0].id).toEqual('hei');
+      expect(segmentPairs6[0].segments[0].name).toEqual('viewsix');
+      expect(segmentPairs6[0].segments[0].data.userId).toEqual('hei');
+      expect(segmentPairs6[0].segments[0].component.name).toEqual(MockView6.name);
+    });
+
+    it('should return a certain component if it\'s matched exactly even when we have param links that match too', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'account' };
+      const link2 = { component: MockView2, name: 'viewtwo', segment: 'account/addresses' };
+      const link3 = { component: MockView3, name: 'viewthree', segment: 'account/addresses/disabled' };
+      const link4 = { component: MockView4, name: 'viewfour', segment: ':userId/:categoryId/:productId' };
+      const link5 = { component: MockView5, name: 'viewfive', segment: ':userId/:categoryId' };
+      const link6 = { component: MockView6, name: 'viewsix', segment: ':userId' };
+
+      const links = normalizeLinks([link1, link2, link3, link4, link5, link6]);
+      const url1 = 'account';
+      const url2 = 'account/addresses';
+      const url3 = 'account/addresses/disabled';
+
+      const segmentPairs1 = convertUrlToDehydratedSegments(url1, links);
+      expect(segmentPairs1.length).toEqual(1);
+      expect(segmentPairs1[0].segments.length).toEqual(1);
+      expect(segmentPairs1[0].segments[0].id).toEqual('account');
+      expect(segmentPairs1[0].segments[0].name).toEqual('viewone');
+      expect(segmentPairs1[0].segments[0].component.name).toEqual(MockView1.name);
+
+      const segmentPairs2 = convertUrlToDehydratedSegments(url2, links);
+      expect(segmentPairs2.length).toEqual(1);
+      expect(segmentPairs2[0].segments.length).toEqual(1);
+      expect(segmentPairs2[0].segments[0].id).toEqual('account/addresses');
+      expect(segmentPairs2[0].segments[0].name).toEqual('viewtwo');
+      expect(segmentPairs2[0].segments[0].component.name).toEqual(MockView2.name);
+
+      const segmentPairs3 = convertUrlToDehydratedSegments(url3, links);
+      expect(segmentPairs3.length).toEqual(1);
+      expect(segmentPairs3[0].segments.length).toEqual(1);
+      expect(segmentPairs3[0].segments[0].id).toEqual('account/addresses/disabled');
+      expect(segmentPairs3[0].segments[0].name).toEqual('viewthree');
+      expect(segmentPairs3[0].segments[0].component.name).toEqual(MockView3.name);
+    });
+
     it('should return a segment w/ secondary id even if it has the same name as a router link basic', () => {
       const link1 = { component: MockView1, name: 'viewone', segment: 'view-one/paramOne/:paramOne/paramTwo/:paramTwo' };
       const link2 = { component: MockView1, name: 'viewtwo', segment: 'view-two/user/:userId' };
@@ -755,10 +872,10 @@ describe('UrlSerializer', () => {
 
       const links = normalizeLinks([link1, link2, link3, link4, link5]);
       const url = 'schedule/schedule/paramOne/hello/paramTwo/goodbye'
-                  + '/about/about/123'
-                  + '/tabs/t1/tab-one/third-page'
-                  + '/tabs/t2/tab-two/fourth-page/object/456'
-                  + '/fifth-page/taco-page';
+        + '/about/about/123'
+        + '/tabs/t1/tab-one/third-page'
+        + '/tabs/t2/tab-two/fourth-page/object/456'
+        + '/fifth-page/taco-page';
 
       const segmentPairs = convertUrlToDehydratedSegments(url, links);
       expect(segmentPairs.length).toEqual(3);
