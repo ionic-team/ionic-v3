@@ -15,5 +15,5 @@ function help() {
 }
 
 gulp.task('validate', (done: (err: any) => void) => {
-  runSequence('clean', ['lint', 'test'], done);
+  runSequence('clean', ['test'], done);
 });

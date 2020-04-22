@@ -101,7 +101,8 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
     superset: 'mobile',
     subsets: [
       'ipad',
-      'iphone'
+      'iphone',
+      'iphone-x'
     ],
     settings: {
       autoFocusAssist: 'delay',
@@ -148,7 +149,26 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       'phablet'
     ],
     isMatch(plt: Platform) {
-      return plt.isPlatformMatch('iphone');
+      let smallest = Math.min(plt.width(), plt.height());
+      let largest = Math.max(plt.width(), plt.height());
+      return plt.isPlatformMatch('iphone') && (smallest < 375 || largest < 812);
+    }
+  },
+
+  /**
+   * iphone X
+   */
+  'iphone-x': {
+    subsets: [
+      'phablet'
+    ],
+    settings: {
+      keyboardHeight: 335,
+    },
+    isMatch(plt: Platform) {
+      let smallest = Math.min(plt.width(), plt.height());
+      let largest = Math.max(plt.width(), plt.height());
+      return plt.isPlatformMatch('iphone') && smallest >= 375 && largest >= 812;
     }
   },
 
