@@ -424,52 +424,59 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
 
     const segmentPieces = navGroup.segmentPieces.concat([]);
 
-    for (let i = segmentPieces.length; i >= 0; i--) {
-      let created = false;
-      for (let j = 0; j < i; j++) {
-        const startIndex = i - j - 1;
-        const endIndex = i;
-        const subsetOfUrl = segmentPieces.slice(startIndex, endIndex);
-        for (const navLink of navLinks) {
-          if (!usedNavLinks.has(navLink.name)) {
-            const segment = getSegmentsFromUrlPieces(subsetOfUrl, navLink);
+    const matchedExactLink = navLinks.find(navLink => {
+      return navLink.segmentParts.join('/') === segmentPieces.join('/');
+    });
 
-            if (segment) {
-              i = startIndex + 1;
-              usedNavLinks.add(navLink.name);
-              created = true;
-              // sweet, we found a segment
-              segments.push(segment);
-              // now we want to null out the url subsection in the segmentPieces
-              for (let k = startIndex; k < endIndex; k++) {
-                segmentPieces[k] = null;
+    if (matchedExactLink) {
+      const segment = getSegmentsFromUrlPieces(segmentPieces, matchedExactLink);
+      segments.push(segment);
+    } else {
+      for (let i = segmentPieces.length; i >= 0; i--) {
+        let created = false;
+        for (let j = 0; j < i; j++) {
+          const startIndex = i - j - 1;
+          const endIndex = i;
+          const subsetOfUrl = segmentPieces.slice(startIndex, endIndex);
+          for (const navLink of navLinks) {
+            if (!usedNavLinks.has(navLink.name)) {
+              const segment = getSegmentsFromUrlPieces(subsetOfUrl, navLink);
+
+              if (segment) {
+                i = startIndex + 1;
+                usedNavLinks.add(navLink.name);
+                created = true;
+                // sweet, we found a segment
+                segments.push(segment);
+                // now we want to null out the url subsection in the segmentPieces
+                for (let k = startIndex; k < endIndex; k++) {
+                  segmentPieces[k] = null;
+                }
+                break;
               }
-              break;
             }
           }
+          if (created) {
+            break;
+          }
         }
-        if (created) {
-          break;
+        if (!created && segmentPieces[i - 1]) {
+          // this is very likely a tab's secondary identifier
+          segments.push({
+            id: null,
+            name: null,
+            secondaryId: segmentPieces[i - 1],
+            component: null,
+            loadChildren: null,
+            data: null,
+            defaultHistory: null
+          });
         }
-      }
-      if (!created && segmentPieces[i - 1]) {
-        // this is very likely a tab's secondary identifier
-        segments.push({
-          id: null,
-          name: null,
-          secondaryId: segmentPieces[i - 1],
-          component: null,
-          loadChildren: null,
-          data: null,
-          defaultHistory: null
-        });
       }
     }
-
     // since we're getting segments in from right-to-left in the url, reverse them
     // so they're in the correct order. Also filter out and bogus segments
     const orderedSegments = segments.reverse();
-
 
     // okay, this is the lazy persons approach here.
     // so here's the deal! Right now if section of the url is not a part of a segment
@@ -496,6 +503,8 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
       segments: cleanedSegments
     });
   }
+
+
   return pairs;
 }
 
@@ -505,10 +514,10 @@ export function getSegmentsFromUrlPieces(urlSections: string[], navLink: NavLink
   }
   for (let i = 0; i < urlSections.length; i++) {
     if (!isPartMatch(urlSections[i], navLink.segmentParts[i])) {
-      // just return an empty array if the part doesn't match
       return null;
     }
   }
+  // just return an empty array if the part doesn't match
   return {
     id: urlSections.join('/'),
     name: navLink.name,
