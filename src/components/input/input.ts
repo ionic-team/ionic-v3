@@ -611,7 +611,8 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
       // focus this input if the pointer hasn't moved XX pixels
       // and the input doesn't already have focus
       if (!hasPointerMoved(8, this._coord, endCoord) && !this.isFocus()) {
-        ev.preventDefault();
+        // ev.preventDefault(); // This breaks the first time tap behavior on Android 9.
+        // @see https://github.com/ionic-team/ionic-v3/issues/1049
         ev.stopPropagation();
 
         // begin the input focus process
