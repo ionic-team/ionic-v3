@@ -71,6 +71,12 @@ export class ModalCmp {
 
     this._setCssClass(componentRef, 'ion-page');
     this._setCssClass(componentRef, 'show-page');
+    this._setAttribute(componentRef, 'tabindex', '-1');
+    this._setAttribute(componentRef, 'aria-dialog', 'true');
+    this._setAttribute(componentRef, 'role', 'dialog');
+    setTimeout(() => {
+        componentRef.location.nativeElement.focus();
+    }, 200);
 
     // Change the viewcontroller's instance to point the user provided page
     // Lifecycle events will be sent to the new instance, instead of the modal's component
@@ -92,6 +98,10 @@ export class ModalCmp {
 
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
+  }
+
+  _setAttribute(componentRef: any, attributeName: string, attributeValue: string) {
+      this._renderer.setElementAttribute(componentRef.location.nativeElement, attributeName, attributeValue);
   }
 
   _bdClick() {
