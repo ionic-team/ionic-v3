@@ -8,6 +8,9 @@ import { BlockerDelegate, GESTURE_GO_BACK_SWIPE, GESTURE_MENU_SWIPE,  GestureCon
 import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/take';
+
 /**
  * @hidden
  */
@@ -82,7 +85,7 @@ export class ModalCmp {
     // we need to manually subscribe to them
     this._viewCtrl._setInstance(componentRef.instance);
     this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
-    this._viewCtrl.didEnter.subscribe(this._viewDidEnter.bind(this));
+    this._viewCtrl.didEnter.take(1).subscribe(this._viewDidEnter.bind(this));
     this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
 
     this._enabled = true;
@@ -95,7 +98,7 @@ export class ModalCmp {
   _viewDidEnter() {
       setTimeout(() => {
         this._elementRef.nativeElement.focus();
-      });
+      }, 10);
   }
 
   _viewDidLeave() {
