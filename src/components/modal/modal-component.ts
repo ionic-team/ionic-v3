@@ -13,6 +13,11 @@ import { assert } from '../../util/util';
  */
 @Component({
   selector: 'ion-modal',
+  host: {
+    'role': 'dialog',
+    'tabindex': '-1',
+    'aria-dialog': ''
+  },
   template:
     '<ion-backdrop (click)="_bdClick()" [class.backdrop-no-tappable]="!_bdDismiss"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
@@ -71,18 +76,13 @@ export class ModalCmp {
 
     this._setCssClass(componentRef, 'ion-page');
     this._setCssClass(componentRef, 'show-page');
-    this._setAttribute(componentRef, 'tabindex', '-1');
-    this._setAttribute(componentRef, 'aria-dialog', 'true');
-    this._setAttribute(componentRef, 'role', 'dialog');
-    setTimeout(() => {
-        componentRef.location.nativeElement.focus();
-    }, 200);
 
     // Change the viewcontroller's instance to point the user provided page
     // Lifecycle events will be sent to the new instance, instead of the modal's component
     // we need to manually subscribe to them
     this._viewCtrl._setInstance(componentRef.instance);
     this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
+    this._viewCtrl.didEnter.subscribe(this._viewDidEnter.bind(this));
     this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
 
     this._enabled = true;
@@ -92,16 +92,18 @@ export class ModalCmp {
     this._gestureBlocker.block();
   }
 
+  _viewDidEnter() {
+      setTimeout(() => {
+        this._elementRef.nativeElement.focus();
+      });
+  }
+
   _viewDidLeave() {
     this._gestureBlocker.unblock();
   }
 
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
-  }
-
-  _setAttribute(componentRef: any, attributeName: string, attributeValue: string) {
-      this._renderer.setElementAttribute(componentRef.location.nativeElement, attributeName, attributeValue);
   }
 
   _bdClick() {
