@@ -1,7 +1,22 @@
+<a name="3.9.10"></a>
+## [3.9.10](https://github.com/ionic-team/ionic/compare/v3.9.9...v3.9.10) (2020-04-08)
+
+`ionic-angular` 3.9.10 is a patch release of `ionic-angular` 3.9.9. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.10.
+
+```
+npm install ionic-angular@3.9.10 --save
+```
+
+### Bug Fixes
+
+* **searchbar:** add aria-label to the clear button ([#1096](https://github.com/ionic-team/ionic/issues/1096)) ([665edcf](https://github.com/ionic-team/ionic/commit/665edcf))
+
+
+
 <a name="3.9.9"></a>
 ## [3.9.9](https://github.com/ionic-team/ionic/compare/v3.9.8...v3.9.9) (2019-10-07)
 
-`ionic-angular` 3.9.9 is patch release of `ionic-angular` 3.9.8. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.9.
+`ionic-angular` 3.9.9 is a patch release of `ionic-angular` 3.9.8. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.9.
 
 ```
 npm install ionic-angular@3.9.9 --save
@@ -16,7 +31,7 @@ npm install ionic-angular@3.9.9 --save
 <a name="3.9.8"></a>
 ## [3.9.8](https://github.com/ionic-team/ionic/compare/v3.9.7...v3.9.8) (2019-07-11)
 
-`ionic-angular` 3.9.8 is patch release of `ionic-angular` 3.9.7. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.8.
+`ionic-angular` 3.9.8 is a patch release of `ionic-angular` 3.9.7. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.8.
 
 ```
 npm install ionic-angular@3.9.8 --save
@@ -31,7 +46,7 @@ This is a housekeeping release and does not bring any notable changes.
 <a name="3.9.7"></a>
 ## [3.9.7](https://github.com/ionic-team/ionic/compare/v3.9.6...v3.9.7) (2019-07-11)
 
-`ionic-angular` 3.9.7 is patch release of `ionic-angular` 3.9.6. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.7.
+`ionic-angular` 3.9.7 is a patch release of `ionic-angular` 3.9.6. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.7.
 
 ```
 npm install ionic-angular@3.9.7 --save
@@ -45,7 +60,7 @@ This is a housekeeping release and does not bring any notable changes.
 
 <a name="3.9.6"></a>
 ## [3.9.6](https://github.com/ionic-team/ionic-v3/compare/v3.9.5...v3.9.6) (2019-05-20)
-`ionic-angular` 3.9.6 is patch release of `ionic-angular` 3.9.5. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.6.
+`ionic-angular` 3.9.6 is a patch release of `ionic-angular` 3.9.5. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.6.
 
 ```
 npm install ionic-angular@3.9.6 --save
@@ -59,7 +74,7 @@ npm install ionic-angular@3.9.6 --save
 
 <a name="3.9.5"></a>
 ## [3.9.5](https://github.com/ionic-team/ionic-v3/compare/v3.9.4...v3.9.5) (2019-04-16)
-`ionic-angular` 3.9.5 is patch release of `ionic-angular` 3.9.4. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.5.
+`ionic-angular` 3.9.5 is a patch release of `ionic-angular` 3.9.4. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.5.
 
 ```
 npm install ionic-angular@3.9.5 --save
@@ -75,7 +90,7 @@ npm install ionic-angular@3.9.5 --save
 
 <a name="3.9.4"></a>
 ## 3.9.4 (2019-02-21)
-`ionic-angular` 3.9.4 is patch release of `ionic-angular` 3.9.3. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.4.
+`ionic-angular` 3.9.4 is a patch release of `ionic-angular` 3.9.3. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.4.
 
 ```
 npm install ionic-angular@3.9.4 --save
@@ -88,7 +103,7 @@ npm install ionic-angular@3.9.4 --save
 
 <a name="3.9.3"></a>
 ## 3.9.3 (2019-02-01)
-`ionic-angular` 3.9.3 is patch release of `ionic-angular` 3.9.2. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.3.
+`ionic-angular` 3.9.3 is a patch release of `ionic-angular` 3.9.2. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.3.
 
 ```
 npm install ionic-angular@3.9.3 --save
@@ -114,7 +129,7 @@ This release of `ionic-angular` brings full Node 10 support.
 ## [3.9.2](https://github.com/ionic-team/ionic/compare/v3.9.1...v3.9.2) (2017-11-08)
 
 ## Upgrade Instructions
-`ionic-angular` 3.9.2 is patch release of `ionic-angular` 3.9.1. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.2.
+`ionic-angular` 3.9.2 is a patch release of `ionic-angular` 3.9.1. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.2.
 
 ```
 npm install ionic-angular@3.9.2 --save
@@ -130,7 +145,7 @@ npm install ionic-angular@3.9.2 --save
 ## [3.9.1](https://github.com/ionic-team/ionic/compare/v3.9.0...v3.9.1) (2017-11-08)
 
 ## Upgrade Instructions
-`ionic-angular` 3.9.1 is patch release of `ionic-angular` 3.9.0. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.1.
+`ionic-angular` 3.9.1 is a patch release of `ionic-angular` 3.9.0. To upgrade, follow the instructions [here](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#390-2017-11-08) for updating to `ionic-angular` 3.9.0. After completing those steps, update the `ionic-angular` version to 3.9.1.
 
 ```
 npm install ionic-angular@3.9.1 --save
