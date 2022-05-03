@@ -6,6 +6,8 @@
 
 **See the [Migration from Ionic 3 Guide](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40) for migration information.**
 
+**See [Ionic Support Policy](https://ionicframework.com/docs/reference/support#framework-maintenance-and-support-status) for the support status of each version of Ionic.** 
+
 **Visit https://ionicframework.com/docs for the latest Ionic documentation.**
 
 ------
