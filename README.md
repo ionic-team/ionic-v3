@@ -2,6 +2,16 @@
 
 # Ionic
 
+**Support for Ionic v2 and v3 ended in January 2019. We strongly recommend upgrading to the latest version of Ionic.**
+
+**See the [Migration from Ionic 3 Guide](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40) for migration information.**
+
+**See [Ionic Support Policy](https://ionicframework.com/docs/reference/support#framework-maintenance-and-support-status) for the support status of each version of Ionic.** 
+
+**Visit https://ionicframework.com/docs for the latest Ionic documentation.**
+
+------
+
 [Ionic](https://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
 build top quality native and progressive web apps with web technologies.
 
