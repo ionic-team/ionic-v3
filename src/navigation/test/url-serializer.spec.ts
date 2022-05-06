@@ -11,7 +11,7 @@ import {
   normalizeLinks,
   urlToNavGroupStrings,
   } from '../url-serializer';
-import { MockView1, MockView2, MockView3, mockApp, mockDeepLinkConfig, mockNavController, mockTab, mockTabs, noop } from '../../util/mock-providers';
+import { MockView1, MockView2, MockView3, MockView4, MockView5, MockView6, mockApp, mockDeepLinkConfig, mockNavController, mockTab, mockTabs, noop } from '../../util/mock-providers';
 
 
 describe('UrlSerializer', () => {
@@ -727,6 +727,41 @@ describe('UrlSerializer', () => {
       expect(segmentPairs[0].segments[2].name).toEqual('viewthree');
       expect(segmentPairs[0].segments[2].data.itemId).toEqual('12345');
       expect(segmentPairs[0].segments[2].secondaryId).toEqual('tab-four');
+    });
+
+    it('should return a certain component if it\'s matched exactly even when we have param links that match too', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'account' };
+      const link2 = { component: MockView2, name: 'viewtwo', segment: 'account/addresses' };
+      const link3 = { component: MockView3, name: 'viewthree', segment: 'account/addresses/disabled' };
+      const link4 = { component: MockView4, name: 'viewfour', segment: ':userId/:categoryId/:productId' };
+      const link5 = { component: MockView5, name: 'viewfive', segment: ':userId/:categoryId' };
+      const link6 = { component: MockView6, name: 'viewsix', segment: ':userId' };
+
+      const links = normalizeLinks([link1, link2, link3, link4, link5, link6]);
+      const url1 = 'account';
+      const url2 = 'account/addresses';
+      const url3 = 'account/addresses/disabled';
+
+      const segmentPairs1 = convertUrlToDehydratedSegments(url1, links);
+      expect(segmentPairs1.length).toEqual(1);
+      expect(segmentPairs1[0].segments.length).toEqual(1);
+      expect(segmentPairs1[0].segments[0].id).toEqual('account');
+      expect(segmentPairs1[0].segments[0].name).toEqual('viewone');
+      expect(segmentPairs1[0].segments[0].component.name).toEqual(MockView1.name);
+
+      const segmentPairs2 = convertUrlToDehydratedSegments(url2, links);
+      expect(segmentPairs2.length).toEqual(1);
+      expect(segmentPairs2[0].segments.length).toEqual(1);
+      expect(segmentPairs2[0].segments[0].id).toEqual('account/addresses');
+      expect(segmentPairs2[0].segments[0].name).toEqual('viewtwo');
+      expect(segmentPairs2[0].segments[0].component.name).toEqual(MockView2.name);
+
+      const segmentPairs3 = convertUrlToDehydratedSegments(url3, links);
+      expect(segmentPairs3.length).toEqual(1);
+      expect(segmentPairs3[0].segments.length).toEqual(1);
+      expect(segmentPairs3[0].segments[0].id).toEqual('account/addresses/disabled');
+      expect(segmentPairs3[0].segments[0].name).toEqual('viewthree');
+      expect(segmentPairs3[0].segments[0].component.name).toEqual(MockView3.name);
     });
 
     it('should return a segment w/ secondary id even if it has the same name as a router link basic', () => {
