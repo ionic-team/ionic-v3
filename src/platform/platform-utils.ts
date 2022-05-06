@@ -9,14 +9,29 @@ export function isCordova(plt: Platform): boolean {
 export function isElectron(plt: Platform): boolean {
   return plt.testUserAgent('Electron');
 }
+export function isIpad(plt: Platform): boolean {
+  // iOS 12 and below
+  if (testUserAgent(plt.win(), /iPad/i)) {
+    return true;
+  }
+
+  // iOS 13+
+  if (testUserAgent(plt.win(), /Macintosh/i) && isMobile(plt.win())) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isIphone(plt: Platform): boolean {
+  return testUserAgent(plt.win(), /iPhone/i);
+}
 
 export function isIos(plt: Platform): boolean {
-  // shortcut function to be reused internally
-  // checks navigator.platform to see if it's an actual iOS device
-  // this does not use the user-agent string because it is often spoofed
-  // an actual iPad will return true, a chrome dev tools iPad will return false
-  return plt.testNavigatorPlatform('iphone|ipad|ipod');
+  return testUserAgent(plt.win(), /iPhone|iPod/i) || isIpad(plt);
 }
+
+const isMobile = (win: Window) => matchMedia(win, '(any-pointer:coarse)');
 
 export function isSafari(plt: Platform): boolean {
   return plt.testUserAgent('Safari');
@@ -31,3 +46,11 @@ export function isIosUIWebView(plt: Platform): boolean {
   return isIos(plt) && !isWKWebView(plt) && !isSafari(plt);
 }
 
+
+export function testUserAgent(win: Window, expr: RegExp): boolean {
+  return expr.test(win.navigator.userAgent);
+}
+
+export function matchMedia(win: Window, query: string): boolean {
+  return win.matchMedia(query).matches;
+}
