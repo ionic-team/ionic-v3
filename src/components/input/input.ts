@@ -10,21 +10,21 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import {NgControl} from '@angular/forms';
 
-import { Subject } from 'rxjs/Subject';
+import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 
-import { App } from '../app/app';
-import { Config } from '../../config/config';
-import { Content, ContentDimensions } from '../content/content';
-import { copyInputAttributes, hasPointerMoved, pointerCoord }  from '../../util/dom';
-import { DomController } from '../../platform/dom-controller';
-import { Form, IonicFormInput } from '../../util/form';
-import { BaseInput } from '../../util/base-input';
-import { assert, isTrueProperty } from '../../util/util';
-import { Item } from '../item/item';
-import { Platform } from '../../platform/platform';
+import {App} from '../app/app';
+import {Config} from '../../config/config';
+import {Content, ContentDimensions} from '../content/content';
+import {copyInputAttributes, hasPointerMoved, pointerCoord} from '../../util/dom';
+import {DomController} from '../../platform/dom-controller';
+import {Form, IonicFormInput} from '../../util/form';
+import {BaseInput} from '../../util/base-input';
+import {assert, isTrueProperty} from '../../util/util';
+import {Item} from '../item/item';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -94,7 +94,7 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input,ion-textarea',
   template:
-  '<input #textInput *ngIf="!_isTextarea" class="text-input" ' +
+    '<input #textInput *ngIf="!_isTextarea" class="text-input" ' +
     '[ngClass]="\'text-input-\' + _mode"' +
     '(input)="onInput($event)" ' +
     '(blur)="onBlur($event)" ' +
@@ -110,9 +110,11 @@ import { Platform } from '../../platform/platform';
     '[attr.autocorrect]="autocorrect" ' +
     '[placeholder]="placeholder" ' +
     '[disabled]="_disabled" ' +
-    '[readonly]="_readonly">' +
+    '[readonly]="_readonly" ' +
+    // fix for initial focus bug
+    'style="pointer-events:none;">' +
 
-  '<textarea #textInput *ngIf="_isTextarea" class="text-input" ' +
+    '<textarea #textInput *ngIf="_isTextarea" class="text-input" ' +
     '[ngClass]="\'text-input-\' + _mode"' +
     '(input)="onInput($event)" ' +
     '(blur)="onBlur($event)" ' +
@@ -125,13 +127,13 @@ import { Platform } from '../../platform/platform';
     '[disabled]="_disabled" ' +
     '[readonly]="_readonly"></textarea>' +
 
-  '<button ion-button *ngIf="_clearInput" clear class="text-input-clear-icon" ' +
+    '<button ion-button *ngIf="_clearInput" clear class="text-input-clear-icon" ' +
     'type="button" ' +
     '(click)="clearTextInput($event)" ' +
     '(mousedown)="clearTextInput($event)" ' +
     'tabindex="-1"></button>' +
 
-  '<div class="input-cover" *ngIf="_useAssist" ' +
+    '<div class="input-cover" *ngIf="_useAssist" ' +
     '(touchstart)="_pointerStart($event)" ' +
     '(touchend)="_pointerEnd($event)" ' +
     '(mousedown)="_pointerStart($event)" ' +
@@ -165,6 +167,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   get clearInput() {
     return this._clearInput;
   }
+
   set clearInput(val: any) {
     this._clearInput = (!this._isTextarea && isTrueProperty(val));
   }
@@ -179,6 +182,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
       ? 'text'
       : this._type;
   }
+
   set type(val: any) {
     this._type = val;
   }
@@ -190,6 +194,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   get readonly() {
     return this._readonly;
   }
+
   set readonly(val: boolean) {
     this._readonly = isTrueProperty(val);
   }
@@ -202,6 +207,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   get clearOnEdit() {
     return this._clearOnEdit;
   }
+
   set clearOnEdit(val: any) {
     this._clearOnEdit = isTrueProperty(val);
   }
@@ -209,7 +215,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   /**
    * @hidden
    */
-  @ViewChild('textInput', { read: ElementRef }) _native: ElementRef;
+  @ViewChild('textInput', {read: ElementRef}) _native: ElementRef;
 
   /**
    * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
@@ -309,7 +315,8 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     }
   }
 
-  ngAfterContentInit() { }
+  ngAfterContentInit() {
+  }
 
   /**
    * @hidden
@@ -430,6 +437,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
 
     // TODO: deprecate this (06/07/2017)
     this.focus.emit(ev);
+
+    // Fix for initial focus bug
+    this._pointerEnd(ev);
   }
 
   /**
@@ -461,9 +471,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   }
 
   /**
-  * Check if we need to clear the text input if clearOnEdit is enabled
-  * @hidden
-  */
+   * Check if we need to clear the text input if clearOnEdit is enabled
+   * @hidden
+   */
   checkClearOnEdit(_: string) {
     if (!this._clearOnEdit) {
       return;
@@ -556,6 +566,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     this.ionBlur.subscribe(() => this._relocateInput(false));
 
     const self = this;
+
     function scrollHideCaret(shouldHideCaret: boolean) {
       // if it does have focus, then do the dom write
       if (self.isFocus()) {
@@ -598,6 +609,12 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     // input cover touchend/mouseup
     console.debug(`input-base, pointerEnd, type: ${ev.type}`);
 
+    // Fix for initial focus bug
+    let nes = <HTMLElement>((<HTMLElement>ev.target).nextElementSibling);
+    if (nes && nes.classList.contains('input-cover')) {
+      nes.setAttribute('style', '');
+    }
+
     if ((this._isTouch && ev.type === 'mouseup') || !this._app.isEnabled()) {
       // the app is actively doing something right now
       // don't try to scroll in the input
@@ -617,6 +634,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
         // begin the input focus process
         this._jsSetFocus();
       }
+    } else {
+      // fix for initial focus bug
+      this._jsSetFocus();
     }
 
     this._coord = null;
@@ -659,7 +679,6 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   }
 
 }
-
 
 
 /**
