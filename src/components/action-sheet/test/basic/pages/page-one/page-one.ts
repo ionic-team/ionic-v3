@@ -18,6 +18,10 @@ export class PageOne {
     this.actionSheetCtrl.create()
       .setTitle('Albums')
       .addButton({
+        text: 'Appicon',
+        img: 'assets/img/appicon.png'  // use img tag on the bottom
+      })
+      .addButton({
         text: 'Delete',
         role: 'destructive',
         icon: 'trash',
