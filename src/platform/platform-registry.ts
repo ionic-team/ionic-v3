@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
-import { isCordova, isElectron, isIos, isIosUIWebView } from './platform-utils';
+import { isCordova, isElectron, isIos, isIosUIWebView, isIpad, isIphone } from './platform-utils';
 
 
 export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
@@ -55,7 +55,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       'tablet'
     ],
     settings: {
-      activator: function(plt: Platform): string {
+      activator: function (plt: Platform): string {
         // md mode defaults to use ripple activator
         // however, under-powered devices shouldn't use ripple
         // if this a linux device, and is using Android Chrome v36 (Android 5.0)
@@ -120,7 +120,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       keyboardResizes: keyboardResizes,
     },
     isMatch(plt: Platform) {
-      return plt.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
+      return isIos(plt);
     },
     versionParser(plt: Platform) {
       return plt.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
@@ -136,7 +136,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       keyboardHeight: 500,
     },
     isMatch(plt: Platform) {
-      return plt.isPlatformMatch('ipad');
+      return isIpad(plt);
     }
   },
 
@@ -148,7 +148,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       'phablet'
     ],
     isMatch(plt: Platform) {
-      return plt.isPlatformMatch('iphone');
+      return isIphone(plt);
     }
   },
 
@@ -179,35 +179,35 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
    */
   'cordova': {
     isEngine: true,
-    initialize: function(plt: Platform) {
+    initialize: function (plt: Platform) {
 
       // prepare a custom "ready" for cordova "deviceready"
-      plt.prepareReady = function() {
+      plt.prepareReady = function () {
         // 1) ionic bootstrapped
-        plt.windowLoad(function(win: Window, doc: HTMLDocument) {
+        plt.windowLoad(function (win: Window, doc: HTMLDocument) {
           // 2) window onload triggered or completed
-          doc.addEventListener('deviceready', function() {
+          doc.addEventListener('deviceready', function () {
             // 3) cordova deviceready event triggered
 
             // add cordova listeners to emit platform events
-            doc.addEventListener('backbutton', function(ev: Event) {
+            doc.addEventListener('backbutton', function (ev: Event) {
               plt.zone.run(() => {
                 plt.backButton.emit(ev);
               });
             });
-            doc.addEventListener('pause', function(ev: Event) {
+            doc.addEventListener('pause', function (ev: Event) {
               plt.zone.run(() => {
                 plt.pause.emit(ev);
               });
             });
-            doc.addEventListener('resume', function(ev: Event) {
+            doc.addEventListener('resume', function (ev: Event) {
               plt.zone.run(() => {
                 plt.resume.emit(ev);
               });
             });
 
             // cordova has its own exitApp method
-            plt.exitApp = function() {
+            plt.exitApp = function () {
               (<any>win)['navigator']['app'].exitApp();
             };
 
@@ -228,10 +228,10 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
    */
   'electron': {
     superset: 'core',
-    initialize: function(plt: Platform) {
-      plt.prepareReady = function() {
+    initialize: function (plt: Platform) {
+      plt.prepareReady = function () {
         // 1) ionic bootstrapped
-        plt.windowLoad(function() {
+        plt.windowLoad(function () {
           plt.triggerReady('electron');
         });
       };
