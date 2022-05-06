@@ -34,6 +34,7 @@ a {
   z-index: $z-index-scroll-content;
   display: block;
 
+  // scss-lint:disable PropertySortOrder
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
