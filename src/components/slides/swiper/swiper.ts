@@ -725,6 +725,8 @@ export function fixLoop(s: Slides, plt: Platform) {
 export function slideTo(s: Slides, plt: Platform, slideIndex?: number, speed?: number, runCallbacks = true, internal?: boolean) {
   if (typeof slideIndex === 'undefined') slideIndex = 0;
   if (slideIndex < 0) slideIndex = 0;
+  if (slideIndex >= s._snapGrid.length)
+        slideIndex = s._snapGrid.length - 1;
 
   s._snapIndex = Math.floor(slideIndex / s.slidesPerGroup);
   if (s._snapIndex >= s._snapGrid.length) s._snapIndex = s._snapGrid.length - 1;
@@ -744,7 +746,8 @@ export function slideTo(s: Slides, plt: Platform, slideIndex?: number, speed?: n
 
   // Directions locks
   if (!s._allowSwipeToNext && translate < s._translate && translate < minTranslate(s)) {
-    return false;
+    if ((s._activeIndex || s._snapGrid.length-1) !== slideIndex)
+      return false;
   }
   if (!s._allowSwipeToPrev && translate > s._translate && translate > maxTranslate(s)) {
     if ((s._activeIndex || 0) !== slideIndex ) return false;
