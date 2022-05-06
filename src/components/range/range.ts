@@ -1,4 +1,7 @@
-import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnDestroy, Optional, Renderer,
+  ViewChild, ViewEncapsulation
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isTrueProperty } from '../../util/util';
@@ -259,7 +262,8 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     elementRef: ElementRef,
     renderer: Renderer,
     private _dom: DomController,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _zone: NgZone
   ) {
     super(config, elementRef, renderer, 'range', 0, form, item, null);
     this._events = new UIEventManager(_plt);
@@ -449,7 +453,9 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
             left: `${ratio * 100}%`,
           });
         }
-        this._updateTicks();
+        this._zone.run(() =>{
+          this._updateTicks();
+        });
       });
     }
   }
@@ -473,6 +479,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
         });
       }
     }
+    this._cd.detectChanges();
   }
 
   /** @hidden */
